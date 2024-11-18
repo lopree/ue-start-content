@@ -49,6 +49,8 @@ void ABirdPawn::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0); // 优先级为 0
 		}
 	}
+	//开启重力
+	RenderBird->SetSimulatePhysics(true);
 }
 
 void ABirdPawn::Tick(float DeltaTime)
@@ -69,7 +71,9 @@ void ABirdPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ABirdPawn::JumpBird()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Press SpaceBar!"));
+	//UE_LOG(LogTemp, Warning, TEXT("Press SpaceBar!"));
+	RenderBird->SetPhysicsLinearVelocity(FVector(0.0f, 0.0f, 0.0f));
+	RenderBird->AddImpulse(FVector(0.0f, 0.0f, 2200.0f));
 }
 
 
