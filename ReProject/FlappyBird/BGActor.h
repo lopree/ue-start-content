@@ -17,6 +17,7 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
+	void SetDayNightSprite(int32 timeIndex);
 
 private:
 	//背景组件
@@ -24,5 +25,14 @@ private:
 	//背景图片
 	UPaperSprite* DaySprite;
 	UPaperSprite* NightSprite;
+	//计时器
+	float CurrentTime;
+	float MaxTime;
+	float mininter,maxinter;//间隔时间
+	//时间记录
+	int32 DayNightIndex;
+	
 
 };
+
+
