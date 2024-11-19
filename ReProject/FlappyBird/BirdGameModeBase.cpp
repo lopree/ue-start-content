@@ -22,5 +22,12 @@ void ABirdGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 	//不要在构造函数中生成物体，否则会崩溃。因为构造函数在游戏没有运行时就已经开始
-	GetWorld()->SpawnActor<ABGActor>(ABGActor::StaticClass(),FVector(0,-10,0),FRotator::ZeroRotator);
+	
+	// 获取当前世界上下文
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		World->SpawnActor<ABGActor>(ABGActor::StaticClass(),FVector(0,-10,0),FRotator::ZeroRotator);
+		World->SpawnActor<ALandActor>(ALandActor::StaticClass(),FVector(0,-9,-240),FRotator::ZeroRotator);
+	}
 }
