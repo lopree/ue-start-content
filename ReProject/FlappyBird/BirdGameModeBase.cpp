@@ -17,3 +17,10 @@ ABirdGameModeBase::ABirdGameModeBase()
 	}
 	HUDClass = ABirdHUD::StaticClass();
 }
+
+void ABirdGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+	//不要在构造函数中生成物体，否则会崩溃。因为构造函数在游戏没有运行时就已经开始
+	GetWorld()->SpawnActor<ABGActor>(ABGActor::StaticClass(),FVector(0,-10,0),FRotator::ZeroRotator);
+}

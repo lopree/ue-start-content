@@ -26,7 +26,7 @@ ABirdPawn::ABirdPawn()
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(0, -90.0f, 0));
 	MainCamera->SetProjectionMode(ECameraProjectionMode::Orthographic);
-	MainCamera->SetOrthoWidth(1200.0f);
+	MainCamera->SetOrthoWidth(900.0f);
 	//
 	BirdFlipbook = nullptr;
 }
