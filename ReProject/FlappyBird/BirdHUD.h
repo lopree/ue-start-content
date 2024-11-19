@@ -20,13 +20,36 @@ public:
 	bool bDrawGamePlayButton;
 	UTexture* GamePlayButtonTexture;
 	void BeginPlayButtonInit();
+	//屏幕遮罩
+	void SetGamePlayRect();
+	//绘制皮肤选项卡
+	void DrawBirdsSkinTab();
+	//初始化皮肤
+	void SkinInit();
+	int32 SkinIndex;
 	
 
 private:
-	FString GameplayButtonTexturePath;
+	//按钮texture路径
+	FString gameplay_button_texture_path;
 	float TextureWidth,TextureHeight;
 	float ScreenWidth;
 	float ScreenHeight;
 	UTexture2D* Texture2D;
-	
+	//遮罩参数
+	float RectAlpha;
+	float RectOpenSpeed;
+	bool bDrawBlackRect;
+	//按钮点击事件名称
+	FString PlayrBtnName;
+	//是否开启绘制皮肤
+	bool bDrawSkinToggle;
+	//bird pawn
+	class ABirdPawn* PlayerBirdPawn;
+
+	//小鸟皮肤
+	UTexture2D* redBirdSkinTexture;
+	UTexture2D* yellowBirdSkinTexture;
+	UTexture2D* blueBirdSkinTexture;
+	float box_position_x,box_position_y;
 };

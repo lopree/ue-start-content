@@ -27,6 +27,11 @@ public:
 	UCameraComponent* MainCamera;
 	USphereComponent* SphereCollision;
 	UPaperFlipbook* BirdFlipbook;
+	//设置重力
+	void SetGravity(bool isGravity);
+	//设置皮肤
+	void SetSkin(int32 skin_index);
+	
 
 protected:
 	virtual void BeginPlay() override;

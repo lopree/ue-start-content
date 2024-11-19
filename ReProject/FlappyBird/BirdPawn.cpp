@@ -31,6 +31,32 @@ ABirdPawn::ABirdPawn()
 	BirdFlipbook = nullptr;
 }
 
+void ABirdPawn::SetGravity(bool isGravity)
+{
+	//重力
+	RenderBird->SetSimulatePhysics(isGravity);
+}
+
+void ABirdPawn::SetSkin(int32 skin_index)
+{
+	if (skin_index != -1)
+	{
+		switch (skin_index)
+		{
+			case 0:
+				BirdFlipbook = LoadObject<UPaperFlipbook>(nullptr,TEXT("/Game/_Game/Animation/Bird/PF_RedBird.PF_RedBird"));
+			break;
+			case 1:
+				BirdFlipbook = LoadObject<UPaperFlipbook>(nullptr,TEXT("/Script/Paper2D.PaperFlipbook'/Game/_Game/Animation/Bird/PF_YellowBird.PF_YellowBird'"));
+			break;
+			case 2:
+				BirdFlipbook = LoadObject<UPaperFlipbook>(nullptr,TEXT("/Script/Paper2D.PaperFlipbook'/Game/_Game/Animation/Bird/PF_BlueBird.PF_BlueBird'"));
+			break;
+		}
+		RenderBird->SetFlipbook(BirdFlipbook);
+	}
+}
+
 void ABirdPawn::BeginPlay()
 {
 	Super::BeginPlay();
@@ -49,8 +75,7 @@ void ABirdPawn::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0); // 优先级为 0
 		}
 	}
-	//开启重力
-	RenderBird->SetSimulatePhysics(true);
+	
 }
 
 void ABirdPawn::Tick(float DeltaTime)
