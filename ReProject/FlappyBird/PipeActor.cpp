@@ -1,4 +1,6 @@
 #include "PipeActor.h"
+
+#include "BirdGameStateBase.h"
 #include "PaperSprite.h"
 #include "PaperSpriteComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,6 +44,8 @@ void APipeActor::BeginPlay()
 {
 	Super::BeginPlay();
 	PipSound = LoadObject<USoundBase>(nullptr,TEXT("/Script/Engine.SoundWave'/Game/_Game/Sound/coin.coin'"));
+	//获得gamestate，并转换为ABirdGameStateBase
+	BirdGameState =Cast<ABirdGameStateBase>(GetWorld()->GetGameState());
 }
 
 void APipeActor::Tick(float DeltaTime)
@@ -75,6 +79,8 @@ void APipeActor::PipMove(float DeltaTime)
 				{
 					SceneComponents[i] = false;
 					UGameplayStatics::PlaySound2D(GetWorld(), PipSound);
+					//add score
+					BirdGameState->AddScore();
 				}
 			}	
 		}

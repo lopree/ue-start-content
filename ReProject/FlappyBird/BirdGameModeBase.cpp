@@ -16,6 +16,7 @@ ABirdGameModeBase::ABirdGameModeBase()
 		UE_LOG(LogTemp, Warning, TEXT("Failed to find BP_BirdPawn class!"));
 	}
 	HUDClass = ABirdHUD::StaticClass();
+	GameStateClass = ABirdGameStateBase::StaticClass();
 }
 
 void ABirdGameModeBase::BeginPlay()

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "BGActor.h"
+#include "BirdGameStateBase.h"
 #include "LandActor.h"
 #include "PipeActor.h"
 #include "GameFramework/GameModeBase.h"
@@ -20,4 +21,5 @@ private:
 	ABGActor* BirdActor;
 	ALandActor* LandActor;
 	APipeActor* PipeActor;
+	ABirdGameStateBase* BirdGameState;
 };

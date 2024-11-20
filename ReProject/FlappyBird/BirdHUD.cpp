@@ -1,5 +1,6 @@
 #include "BirdHUD.h"
 
+#include "BirdGameStateBase.h"
 #include "BirdPawn.h"
 #include "Engine/Canvas.h"
 #include "Kismet/GameplayStatics.h"
@@ -15,6 +16,7 @@ ABirdHUD::ABirdHUD()
 	PlayrBtnName = TEXT("Play");
 	bDrawSkinToggle = true;
 	SkinIndex = -1;
+	ScoreFont = LoadObject<UFont>(nullptr,TEXT("/Script/Engine.Font'/Game/_Game/Font/JETBRAINSMONONERDFONTMONO-REGULAR_Font.JETBRAINSMONONERDFONTMONO-REGULAR_Font'"));
 }
 
 void ABirdHUD::BeginPlay()
@@ -62,7 +64,7 @@ void ABirdHUD::DrawHUD()
 	{
 		DrawBirdsSkinTab();
 	}
-
+	DrawScoreToScreen();
 	
 }
 //遮罩
@@ -95,6 +97,16 @@ void ABirdHUD::SkinInit()
 	redBirdSkinTexture = LoadObject<UTexture2D>(nullptr,TEXT("/Script/Engine.Texture2D'/Game/_Game/Texture/Bird/red_bird.red_bird'"));
 	yellowBirdSkinTexture = LoadObject<UTexture2D>(nullptr,TEXT("/Script/Engine.Texture2D'/Game/_Game/Texture/Bird/yellow_bird.yellow_bird'"));
 	blueBirdSkinTexture = LoadObject<UTexture2D>(nullptr,TEXT("/Script/Engine.Texture2D'/Game/_Game/Texture/Bird/blue_bird.blue_bird'"));
+	//获得游戏状态
+	GameState = Cast<ABirdGameStateBase>(GetWorld()->GetGameState());
+}
+
+void ABirdHUD::DrawScoreToScreen()
+{
+	if (!ScoreFont||!GameState) return;
+	DrawText(TEXT("Score: "),FLinearColor::Red,20,20,ScoreFont);
+	DrawText(FString::FromInt(GameState->GetScore()),FLinearColor::Red,20+200,20,ScoreFont);
+	
 }
 
 //开始按钮

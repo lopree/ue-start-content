@@ -52,4 +52,9 @@ private:
 	UTexture2D* yellowBirdSkinTexture;
 	UTexture2D* blueBirdSkinTexture;
 	float box_position_x,box_position_y;
+	//gamestate
+	class ABirdGameStateBase* GameState;
+	void DrawScoreToScreen();
+	//font
+	UFont* ScoreFont;
 };

@@ -58,8 +58,10 @@ public:
 private:
 	TArray<FPipInfo> SceneComponents;
 	float PipMoveSpeed;
-
+	//声音
 	USoundBase* PipSound;
 	bool bPlayToggle;
+	//分数
+	class ABirdGameStateBase* BirdGameState;
 
 };
