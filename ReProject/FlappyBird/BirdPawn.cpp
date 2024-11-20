@@ -21,7 +21,9 @@ ABirdPawn::ABirdPawn()
 	RenderBird ->SetupAttachment(RootComponent);
 	SpringArm ->SetupAttachment(RootComponent);
 	MainCamera -> SetupAttachment(SpringArm);
-	SphereCollision -> SetupAttachment(RootComponent);
+	SphereCollision -> SetupAttachment(RenderBird);
+	SphereCollision->bHiddenInGame = false;
+	SphereCollision->SetSphereRadius(15.f);
 	//组件设置
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->SetRelativeRotation(FRotator(0, -90.0f, 0));
@@ -57,6 +59,13 @@ void ABirdPawn::SetSkin(int32 skin_index)
 	}
 }
 
+void ABirdPawn::OnBeginOverlapEvent(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	//UE_LOG(LogTemp, Display, TEXT("OnBeginOverlapEvent"));
+}
+
+
 void ABirdPawn::BeginPlay()
 {
 	Super::BeginPlay();
@@ -75,7 +84,8 @@ void ABirdPawn::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0); // 优先级为 0
 		}
 	}
-	
+	SetGravity(true);
+	SphereCollision->OnComponentBeginOverlap.AddDynamic(this,&ABirdPawn::OnBeginOverlapEvent);
 }
 
 void ABirdPawn::Tick(float DeltaTime)

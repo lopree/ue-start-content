@@ -1,6 +1,8 @@
 #include "PipeActor.h"
 #include "PaperSprite.h"
 #include "PaperSpriteComponent.h"
+#include "Kismet/GameplayStatics.h"
+
 APipeActor::APipeActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -33,11 +35,13 @@ APipeActor::APipeActor()
 	}
 
 	PipMoveSpeed = 30.f;
+	bPlayToggle = true;
 }
 
 void APipeActor::BeginPlay()
 {
 	Super::BeginPlay();
+	PipSound = LoadObject<USoundBase>(nullptr,TEXT("/Script/Engine.SoundWave'/Game/_Game/Sound/coin.coin'"));
 }
 
 void APipeActor::Tick(float DeltaTime)
@@ -61,6 +65,14 @@ void APipeActor::PipMove(float DeltaTime)
 				float new_x_position = SceneComponents[newIndex]->GetRelativeLocation().X + 170.f;
 				SceneComponents[i]->SetRelativeLocation(FVector(new_x_position, 0, 0));
 				SetPipInterDistance(SceneComponents[i]);
+				bPlayToggle = true;
+			}
+
+			//播放音效
+			if (SceneComponents[i]->GetRelativeLocation().X < 0.f && bPlayToggle)
+			{
+				bPlayToggle = false;
+				UGameplayStatics::PlaySound2D(GetWorld(), PipSound);
 			}
 		}	
 	}

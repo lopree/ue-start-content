@@ -27,8 +27,8 @@ void ABirdGameModeBase::BeginPlay()
 	UWorld* World = GetWorld();
 	if (World)
 	{
-		World->SpawnActor<ABGActor>(ABGActor::StaticClass(),FVector(0,-10,0),FRotator::ZeroRotator);
-		World->SpawnActor<APipeActor>(APipeActor::StaticClass(),FVector(0,-9,0),FRotator::ZeroRotator);
-		World->SpawnActor<ALandActor>(ALandActor::StaticClass(),FVector(0,-8,-200),FRotator::ZeroRotator);
+		World->SpawnActor<ABGActor>(ABGActor::StaticClass(),FVector(0,-100,0),FRotator::ZeroRotator);
+		World->SpawnActor<APipeActor>(APipeActor::StaticClass(),FVector(0,-6,0),FRotator::ZeroRotator);
+		World->SpawnActor<ALandActor>(ALandActor::StaticClass(),FVector(0,5,-200),FRotator::ZeroRotator);
 	}
 }

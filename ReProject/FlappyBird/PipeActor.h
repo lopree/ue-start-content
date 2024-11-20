@@ -26,4 +26,7 @@ private:
 	TArray<USceneComponent*> SceneComponents;
 	float PipMoveSpeed;
 
+	USoundBase* PipSound;
+	bool bPlayToggle;
+
 };
