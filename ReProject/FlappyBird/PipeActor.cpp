@@ -14,9 +14,7 @@ APipeActor::APipeActor()
 		USceneComponent* scene_component = CreateDefaultSubobject<USceneComponent>(*scene_name);
 		scene_component->SetupAttachment(RootComponent);
 		scene_component->SetRelativeLocation(FVector(170.f * i, 0, 0));
-		FVector old_location = scene_component->GetRelativeLocation();
-		old_location.Z = FMath::RandRange(-30.f,120.f);
-		scene_component->SetRelativeLocation(old_location);
+		SetPipInterDistance(scene_component);
 		//子组件
 		FString up_name = FString::Printf(TEXT("UP%d"), i );
 		FString down_name = FString::Printf(TEXT("Down%d"), i );
@@ -34,19 +32,44 @@ APipeActor::APipeActor()
 		
 	}
 
-	
+	PipMoveSpeed = 30.f;
 }
 
 void APipeActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	
 }
 
 void APipeActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	PipMove(DeltaTime);
+}
 
+void APipeActor::PipMove(float DeltaTime)
+{
+	if (SceneComponents.Num() > 0)
+	{
+		float pip_move_speed = PipMoveSpeed * DeltaTime * -1;
+		for (int32 i = 0; i < SceneComponents.Num(); i++)
+		{
+			SceneComponents[i]->AddRelativeLocation(FVector(pip_move_speed, 0, 0));
+			int32 newIndex = i -1;
+			if (newIndex < 0) newIndex = 2;
+			if (SceneComponents[i]->GetRelativeLocation().X <= -240.f)
+			{
+				float new_x_position = SceneComponents[newIndex]->GetRelativeLocation().X + 170.f;
+				SceneComponents[i]->SetRelativeLocation(FVector(new_x_position, 0, 0));
+				SetPipInterDistance(SceneComponents[i]);
+			}
+		}	
+	}
+}
+
+void APipeActor::SetPipInterDistance(USceneComponent* pip_root)
+{
+	FVector old_location = pip_root->GetRelativeLocation();
+	old_location.Z = FMath::RandRange(-30.f,120.f);
+	pip_root->SetRelativeLocation(old_location);
 }
 

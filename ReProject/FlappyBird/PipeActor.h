@@ -19,7 +19,11 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
+	void PipMove(float DeltaTime);
+	//管道移动
+	void SetPipInterDistance(USceneComponent* pip_root);
 private:
 	TArray<USceneComponent*> SceneComponents;
+	float PipMoveSpeed;
 
 };
