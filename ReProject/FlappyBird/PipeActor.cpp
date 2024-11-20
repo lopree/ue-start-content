@@ -54,27 +54,30 @@ void APipeActor::PipMove(float DeltaTime)
 {
 	if (SceneComponents.Num() > 0)
 	{
-		float pip_move_speed = PipMoveSpeed * DeltaTime * -1;
-		for (int32 i = 0; i < SceneComponents.Num(); i++)
+		if (SceneComponents.Num() > 0)
 		{
-			SceneComponents[i]->AddRelativeLocation(FVector(pip_move_speed, 0, 0));
-			int32 newIndex = i -1;
-			if (newIndex < 0) newIndex = 2;
-			if (SceneComponents[i]->GetRelativeLocation().X <= -240.f)
+			float pip_move_speed = PipMoveSpeed * DeltaTime * -1;
+			for (int32 i = 0; i < SceneComponents.Num(); i++)
 			{
-				float new_x_position = SceneComponents[newIndex]->GetRelativeLocation().X + 170.f;
-				SceneComponents[i]->SetRelativeLocation(FVector(new_x_position, 0, 0));
-				SetPipInterDistance(SceneComponents[i]);
-				bPlayToggle = true;
-			}
-
-			//播放音效
-			if (SceneComponents[i]->GetRelativeLocation().X < 0.f && bPlayToggle)
-			{
-				bPlayToggle = false;
-				UGameplayStatics::PlaySound2D(GetWorld(), PipSound);
-			}
-		}	
+				SceneComponents[i]->AddRelativeLocation(FVector(pip_move_speed, 0, 0));
+				int32 newIndex = i -1;
+				if (newIndex < 0) newIndex = 2;
+				if (SceneComponents[i]->GetRelativeLocation().X <= -240.f)
+				{
+					float new_x_position = SceneComponents[newIndex]->GetRelativeLocation().X + 170.f;
+					SceneComponents[i]->SetRelativeLocation(FVector(new_x_position, 0, 0));
+					SetPipInterDistance(SceneComponents[i]);
+					SceneComponents[i] = true;
+				}
+	
+				//播放音效
+				if (SceneComponents[i]->GetRelativeLocation().X < -155.f && SceneComponents[i])
+				{
+					SceneComponents[i] = false;
+					UGameplayStatics::PlaySound2D(GetWorld(), PipSound);
+				}
+			}	
+		}
 	}
 }
 
