@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "BGActor.h"
 #include "LandActor.h"
+#include "PipeActor.h"
 #include "GameFramework/GameModeBase.h"
 #include "BirdGameModeBase.generated.h"
 
@@ -18,4 +19,5 @@ protected:
 private:
 	ABGActor* BirdActor;
 	ALandActor* LandActor;
+	APipeActor* PipeActor;
 };

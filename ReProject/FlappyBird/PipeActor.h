@@ -1,7 +1,6 @@
 #pragma once
 
-#include "PaperSprite.h"
-#include "PaperSpriteComponent.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PipeActor.generated.h"
@@ -21,17 +20,6 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 private:
-	USceneComponent* FirstRoot;
-	USceneComponent* SecondRoot;
-	USceneComponent* ThirdRoot;
-	UPaperSpriteComponent* FirstPaperSpriteUP;
-	UPaperSpriteComponent* SecondPaperSpriteUP;
-	UPaperSpriteComponent* ThirdPaperSpriteUP;
-	UPaperSpriteComponent* FirstPaperSpriteBottom;
-	UPaperSpriteComponent* SecondPaperSpriteBottom;
-	UPaperSpriteComponent* ThirdPaperSpriteBottom;
-	//
-	UPaperSprite* PipSpriteUP;
-	UPaperSprite* PipSpriteBottom;
+	TArray<USceneComponent*> SceneComponents;
 
 };
