@@ -1,8 +1,16 @@
 #include "BasicGameModeBase.h"
-
 #include "SmartPointer/FSmartPointClass.h"
 
-void ABasicGameModeBase::NativPointer()
+ABasicGameModeBase::ABasicGameModeBase()
+{
+	static ConstructorHelpers::FClassFinder<APawn> PlayerActorBPClass(TEXT("/Script/Engine.Blueprint'/Game/_Game/BP/BP_BasicActor.BP_BasicActor_C'"));
+	if (PlayerActorBPClass.Class != NULL)
+	{
+		DefaultPawnClass = PlayerActorBPClass.Class;
+	}
+}
+
+void ABasicGameModeBase::NativePointer()
 {
 	TSharedPtr<FSmartPointClass> pMyClassInstance(new FSmartPointClass);
 	UE_LOG(LogTemp,Log,TEXT("引用次数：%d"),pMyClassInstance.GetSharedReferenceCount());//1次，new FSmartPointClass这个空间被引用了一次，也就是首次记录
@@ -39,5 +47,11 @@ void ABasicGameModeBase::NativPointer()
 	UE_LOG(LogTemp,Log,TEXT("被pin后，原来05指向的空间又被07指向，所以有2次：%d"),pMyClassInstance_05.GetSharedReferenceCount());//2次
 	
 	
+}
+
+void ABasicGameModeBase::NotifyEvent()
+{
+	//广播通知
+	OneNotifyDelegate.ExecuteIfBound();
 }
 	
