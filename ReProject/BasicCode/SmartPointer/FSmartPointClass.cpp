@@ -2,6 +2,8 @@
 
 FSmartPointClass::FSmartPointClass()
 {
+	UE_LOG(LogTemp,Log,TEXT("初始化自定义类"));
+	Num = 50;
 }
 
 FSmartPointClass::~FSmartPointClass()
