@@ -52,6 +52,16 @@ void ABasicGameModeBase::NativePointer()
 void ABasicGameModeBase::NotifyEvent()
 {
 	//广播通知
-	OneNotifyDelegate.ExecuteIfBound();
+	//bindraw演示
+	FSmartPointClass* pMyClassInstance(new FSmartPointClass);
+	OneNotifyDelegate.BindRaw(pMyClassInstance,&FSmartPointClass::TestPointer);
+	OneNotifyDelegate.ExecuteIfBound();//如果是一对一的单播，不需要检查是否已经存在bind。后续的bind会替代前面的
+	if (OneNotifyDelegateWithReturnValue.IsBound())
+	{
+		UE_LOG(LogTemp,Log,TEXT("返回的数值是：%d"), OneNotifyDelegateWithReturnValue.Execute());
+	}
+	
+	delete pMyClassInstance;
+	
 }
 	

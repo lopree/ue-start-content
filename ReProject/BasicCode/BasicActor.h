@@ -19,6 +19,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	//委托回调
 	void DelegateCallback();
+	int32 DelegateWithReturn();
+	
 
 };
