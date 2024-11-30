@@ -1,7 +1,10 @@
 #include "TutorialUserWidget.h"
 
+#include "Animation/WidgetAnimation.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "DSP/BufferDiagnostics.h"
+#include "UObject/UnrealTypePrivate.h"
 
 bool UTutorialUserWidget::Initialize()
 {

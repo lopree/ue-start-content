@@ -19,7 +19,6 @@ public:
 	UPROPERTY()
 	UTextBlock* NameText;
 protected:
-	
 	UFUNCTION(BlueprintCallable)
 	void ChangeText();
 	
