@@ -48,7 +48,7 @@ void ABasicGameModeBase::NativePointer()
 	
 	
 }
-
+///启用单播
 void ABasicGameModeBase::NotifyEvent()
 {
 	//广播通知
@@ -63,5 +63,38 @@ void ABasicGameModeBase::NotifyEvent()
 	
 	delete pMyClassInstance;
 	
+}
+///启用多播
+void ABasicGameModeBase::MultiNotifyEvent()
+{
+	if (MultiNotifyDelegate.IsBound())
+	{
+		MultiNotifyDelegate.Broadcast();
+	}
+
+	if (MultiNotifyDelegateWithOneParam.IsBound())
+	{
+		MultiNotifyDelegateWithOneParam.Broadcast(100);
+	}
+}
+
+void ABasicGameModeBase::DynNotifyEvent()
+{
+	DynNotifyDelegate.ExecuteIfBound();
+	if (DynNotifyDelegateWithOneParam.IsBound())
+	{
+		int32 return_num = DynNotifyDelegateWithOneParam.Execute(100);
+		UE_LOG(LogTemp,Log,TEXT("返回的值：%d"),return_num);
+	}
+	//解绑
+	//DynNotifyDelegate.Clear();
+}
+
+void ABasicGameModeBase::DynMultiNotifyEvent()
+{
+	if (DynMulWithOneParam.IsBound())
+	{
+		DynMulWithOneParam.Broadcast(101);
+	}
 }
 	
