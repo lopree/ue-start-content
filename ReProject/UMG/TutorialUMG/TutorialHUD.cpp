@@ -1,6 +1,7 @@
 #include "TutorialHUD.h"
 
 #include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 void ATutorialHUD::BeginPlay()
 {
@@ -12,5 +13,16 @@ void ATutorialHUD::BeginPlay()
 	if (Widget)
 	{
 		Widget->AddToViewport();
+	}
+	//set mouse cursor
+	// 获取玩家控制器
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController)
+	{
+		// 显示鼠标
+		PlayerController->bShowMouseCursor = true;
+	}else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[rookstein]cant find player"));
 	}
 }

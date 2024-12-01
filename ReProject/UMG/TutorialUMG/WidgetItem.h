@@ -10,11 +10,17 @@ UCLASS()
 class REPROJECT_API UWidgetItem : public UUserWidget
 {
 	GENERATED_BODY()
-	protected:
+public:
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
+
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* ArrowWidget;
 	UPROPERTY(meta=(BindWidget))
 	UImage* Icon;
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* TileWidget;
+
+	FVector2d MousePos;
+	
 };
