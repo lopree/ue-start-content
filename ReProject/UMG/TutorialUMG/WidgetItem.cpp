@@ -20,6 +20,4 @@ void UWidgetItem::NativeOnDragDetected(const FGeometry& InGeometry, const FPoint
 	OutOperation = UWidgetBlueprintLibrary::CreateDragDropOperation(UDragDropOperation::StaticClass());
 	OutOperation->Payload = this;
 	OutOperation->DefaultDragVisual = this;
-
-	
 }
