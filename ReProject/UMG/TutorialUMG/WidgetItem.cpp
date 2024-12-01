@@ -32,8 +32,7 @@ void UWidgetItem::NativeOnDragDetected(const FGeometry& InGeometry, const FPoint
 void UWidgetItem::NativeOnListItemObjectSet(UObject* ListItemObject)
 {
 	//将这个widget item的信息设置成传进来的参数
-	UListObject* item = Cast<UListObject>(ListItemObject);
-	if (item)
+	if (UListObject* item = Cast<UListObject>(ListItemObject))
 	{
 		TileWidget->SetText(FText::FromString(item->ItemName));
 		//为子控件设定缩进
@@ -41,6 +40,12 @@ void UWidgetItem::NativeOnListItemObjectSet(UObject* ListItemObject)
 		{
 			size_slot->SetPadding(FMargin(20*item->Level,0,0,0));
 		}
+		ArrowWidget->SetVisibility(item->Children.Num() == 0 ? ESlateVisibility::Hidden : ESlateVisibility::Visible);
+		//更新信息
+		item->widget_item = this;
+
+		FString state = item->bOpen ? TEXT("v") : TEXT(">");
+		ArrowWidget->SetText(FText::FromString(state));
 	}else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[rookstein]无法正常抓换"));

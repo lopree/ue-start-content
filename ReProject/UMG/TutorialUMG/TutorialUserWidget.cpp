@@ -46,6 +46,7 @@ void UTutorialUserWidget::OnGetItemChildren(UObject* Item, TArray<UObject*>& Chi
 	if (UListObject* item = Cast<UListObject>(Item))
 	{
 		Children.Append(item->Children);
+		
 	}
 }
 
@@ -69,4 +70,16 @@ bool UTutorialUserWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 		Cast<UCanvasPanelSlot>(widget_item->Slot)->SetPosition(new_pos-widget_item->DragDropOperation->DragOffset);
 	}
 	return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
+}
+
+void UTutorialUserWidget::OnTreeItemClicked(UObject* obj)
+{
+	UListObject* item = Cast<UListObject>(obj);
+	//改变开始的箭头方向
+	if (item->widget_item)
+	{
+		item->bOpen = !item->bOpen;
+		FString state = item->bOpen ? TEXT("v") : TEXT(">");
+		item->widget_item->ArrowWidget->SetText(FText::FromString(state));
+	}
 }

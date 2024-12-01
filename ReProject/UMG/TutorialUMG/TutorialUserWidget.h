@@ -28,6 +28,8 @@ protected:
 	void ChangeText();
 	//松开鼠标的时候触发的事件
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
+	UFUNCTION(BlueprintCallable)
+	void OnTreeItemClicked(UObject* tree_item);
 	//往listview中添加item
 	UFUNCTION()
 	void AddCallback();
