@@ -9,5 +9,7 @@ UCLASS()
 class REPROJECT_API AUMG02_GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	AUMG02_GameModeBase();
 	
 };
