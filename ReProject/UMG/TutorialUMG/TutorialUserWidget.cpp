@@ -1,11 +1,15 @@
 #include "TutorialUserWidget.h"
 
 #include "CustomDragDropOperation.h"
+#include "ListObject.h"
 #include "WidgetItem.h"
 #include "Blueprint/DragDropOperation.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
+#include "Components/Button.h"
 #include "Components/CanvasPanelSlot.h"
+#include "Components/ListView.h"
 #include "Components/TextBlock.h"
+#include "Components/TreeView.h"
 
 bool UTutorialUserWidget::Initialize()
 {
@@ -15,6 +19,34 @@ bool UTutorialUserWidget::Initialize()
 		return true; 
 	}
 	return false; 
+}
+
+
+void UTutorialUserWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+	AddItemButton->OnClicked.AddDynamic(this, &UTutorialUserWidget::AddCallback);
+}
+
+void UTutorialUserWidget::AddCallback()
+{
+	for (int32 i = 0; i < 10; i++)
+	{
+		UListObject* item = NewObject<UListObject>(this);
+		item->ItemName = FString::Printf(TEXT("Item %i"), i);
+		item->CreatChildObject();
+		CustomTreeView->AddItem(item);
+	}
+	//为子控件添加点击事件
+	CustomTreeView->SetOnGetItemChildren(this, &UTutorialUserWidget::OnGetItemChildren);
+}
+
+void UTutorialUserWidget::OnGetItemChildren(UObject* Item, TArray<UObject*>& Children)
+{
+	if (UListObject* item = Cast<UListObject>(Item))
+	{
+		Children.Append(item->Children);
+	}
 }
 
 void UTutorialUserWidget::ChangeText()
