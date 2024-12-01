@@ -1,5 +1,6 @@
 #include "TutorialUserWidget.h"
 
+#include "CustomDragDropOperation.h"
 #include "WidgetItem.h"
 #include "Blueprint/DragDropOperation.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
@@ -33,8 +34,7 @@ bool UTutorialUserWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragD
 	UWidgetItem* widget_item = Cast<UWidgetItem>(InOperation->Payload);
 	if (widget_item != nullptr)
 	{
-		
-		Cast<UCanvasPanelSlot>(widget_item->Slot)->SetPosition(new_pos-widget_item->MousePos);
+		Cast<UCanvasPanelSlot>(widget_item->Slot)->SetPosition(new_pos-widget_item->DragDropOperation->DragOffset);
 	}
 	return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 }

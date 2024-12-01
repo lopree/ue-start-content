@@ -5,7 +5,7 @@
 #include "WidgetItem.generated.h"
 class UTextBlock;
 class UImage;
-
+class UCustomDragDropOperation;
 UCLASS()
 class REPROJECT_API UWidgetItem : public UUserWidget
 {
@@ -21,6 +21,6 @@ public:
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* TileWidget;
 
-	FVector2d MousePos;
+	UCustomDragDropOperation* DragDropOperation;
 	
 };
