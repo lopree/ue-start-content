@@ -2,6 +2,8 @@
 #include "CustomDragDropOperation.h"
 #include "ListObject.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Components/Border.h"
+#include "Components/SizeBoxSlot.h"
 #include "Components/TextBlock.h"
 ///拖拽的点击
 FReply UWidgetItem::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
@@ -34,6 +36,11 @@ void UWidgetItem::NativeOnListItemObjectSet(UObject* ListItemObject)
 	if (item)
 	{
 		TileWidget->SetText(FText::FromString(item->ItemName));
+		//为子控件设定缩进
+		if (USizeBoxSlot* size_slot = Cast<USizeBoxSlot>(ItemBorder->Slot))
+		{
+			size_slot->SetPadding(FMargin(20*item->Level,0,0,0));
+		}
 	}else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[rookstein]无法正常抓换"));

@@ -7,6 +7,7 @@ void UListObject::CreatChildObject()
 	{
 		UListObject* item = NewObject<UListObject>(this);
 		item->ItemName = FString::Printf(TEXT("%s - %i"),*ItemName,i);
+		item->Level = 1;
 		Children.Add(item);
 	}
 }

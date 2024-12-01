@@ -4,6 +4,7 @@
 #include "Blueprint/IUserObjectListEntry.h"
 #include "Blueprint/UserWidget.h"
 #include "WidgetItem.generated.h"
+class UBorder;
 class UTextBlock;
 class UImage;
 class UCustomDragDropOperation;
@@ -24,7 +25,6 @@ public:
 	UTextBlock* TileWidget;
 
 	UCustomDragDropOperation* DragDropOperation;
-
-	
-	
+	UPROPERTY(meta=(BindWidget))
+	UBorder* ItemBorder;
 };
