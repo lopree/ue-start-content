@@ -4,6 +4,7 @@
 #include "GameFramework/HUD.h"
 #include "FGHUD.generated.h"
 
+class UErrorUserWidget;
 class ULoginUserWidget;
 class UMainMenuUserWidget;
 
@@ -18,6 +19,8 @@ public:
 	UMainMenuUserWidget* MainMenuPanel;
 	UPROPERTY()
 	ULoginUserWidget* LoginPanel;
+	UPROPERTY()
+	UErrorUserWidget* ErrorPanel;
 	//main panel,主面板
 	UMainMenuUserWidget* GetMainMenPanel();
 	void ShowMainMenu();
@@ -26,5 +29,12 @@ public:
 	ULoginUserWidget* GetLoginPanel();
 	void ShowLogin();
 	void HideLogin();
+	//error panel 错误面板
+	UErrorUserWidget* GetErrorPanel();
+	void ShowError();
+	void HideError();
+
+	//show error message
+	UErrorUserWidget* ShowErrorMessage(FText title,FText content);
 	
 };

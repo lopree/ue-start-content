@@ -17,6 +17,10 @@ protected:
 private:
 	AFGHUD* hud;
 	UButton* BackMainMenuButton;
+	UButton* CreateRoomButton;
+	//创建房间的时候，检查错误
+	UFUNCTION()
+	void CreateRoomCallback();
 	//隐藏自己
 	UFUNCTION()
 	void BackMainMenuCallback();
