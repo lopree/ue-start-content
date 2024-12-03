@@ -87,5 +87,7 @@ class REPROJECT_API UItemManager : public UManagerBase
 public:
 	virtual void Install() override;
 	virtual void Uninstall() override;
+
+	bool CheckCanStack(int32 ID){return ID>=1000;}
 	
 };

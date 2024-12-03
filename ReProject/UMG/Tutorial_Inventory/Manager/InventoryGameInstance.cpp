@@ -23,9 +23,3 @@ void UInventoryGameInstance::RegisterManager(uint32 manager_key, UManagerBase* m
 	ManagerMap.Add(manager_key, manager);
 	manager->Install();
 }
-template <typename TClass>
-TClass* UInventoryGameInstance::GetManager(uint32 manager_key)
-{
-	if (!ManagerMap.Contains(manager_key)) return nullptr;
-	return Cast<TClass>(ManagerMap[manager_key]);
-}

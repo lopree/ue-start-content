@@ -2,10 +2,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ManagerBase.h"
 #include "Engine/GameInstance.h"
 #include "InventoryGameInstance.generated.h"
 
-class UManagerBase;
 
 UCLASS()
 class REPROJECT_API UInventoryGameInstance : public UGameInstance
@@ -22,5 +22,13 @@ protected:
 	UPROPERTY()
 	TMap<uint32, UManagerBase*> ManagerMap;
 };
-
+template <typename TClass>
+TClass* UInventoryGameInstance::GetManager(uint32 manager_key)
+{
+	if (!ManagerMap.Contains(manager_key))
+	{
+		return nullptr;
+	}	
+	return Cast<TClass>(ManagerMap[manager_key]);
+}
 
