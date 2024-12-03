@@ -1,0 +1,2 @@
+#include "ManagerBase.h"
+

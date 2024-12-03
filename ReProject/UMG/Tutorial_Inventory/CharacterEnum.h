@@ -10,3 +10,5 @@ enum class EPlayerJob : uint8
 	EPJ_Warrior,
 	EPJ_Wizard,
 };
+
+#define MGRID_ITEM 0

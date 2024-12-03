@@ -9,5 +9,7 @@ UCLASS()
 class REPROJECT_API AInventory_HUD : public AHUD
 {
 	GENERATED_BODY()
+protected:
+	virtual void BeginPlay() override;
 	
 };
