@@ -2,6 +2,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Inventory_HUD.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BagActorComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -78,6 +79,8 @@ void AInventoryCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AInventoryCharacter::Move);
+		//打开背包
+		EnhancedInputComponent->BindAction(BagAction,ETriggerEvent::Completed, this, &AInventoryCharacter::ChangeBagUIState);
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AInventoryCharacter::Look);
@@ -118,6 +121,18 @@ void AInventoryCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void AInventoryCharacter::ChangeBagUIState()
+{
+	if (APlayerController* pc = Cast<APlayerController>(GetController()))
+	{
+		if (AInventory_HUD* hud = Cast<AInventory_HUD>(pc->GetHUD()))
+		{
+			hud->ToggleBag();
+			pc->bShowMouseCursor = !pc->bShowMouseCursor;
+		}
 	}
 }
 
