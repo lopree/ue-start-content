@@ -4,6 +4,9 @@
 #include "ManagerBase.h"
 #include "UObject/NoExportTypes.h"
 #include "ItemManager.generated.h"
+
+class UDataTable;
+
 /// 物品种类：消耗性的道具id从1000开始，别的从1开始
 UENUM(BlueprintType)
 enum class EItemType : uint8
@@ -89,5 +92,15 @@ public:
 	virtual void Uninstall() override;
 
 	bool CheckCanStack(int32 ID){return ID>=1000;}
+	//获得物品信息
+	FItemDataBase* GetItemData(int32 ID);
+	//获得最大堆叠数量
+	int32 GetItemMaxStack(int32 ID);
+protected:
+	//将物品数据加载到内存中
+	UPROPERTY()
+	UDataTable* EquipDataTable;
+	UPROPERTY()
+	UDataTable* ConsumableDataTable;
 	
 };

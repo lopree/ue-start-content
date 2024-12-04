@@ -40,12 +40,12 @@ protected:
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	//获取物品堆叠数量
-	int32 GetItemStack(){return MaxStack;}
+	int32 GetItemStack(){return MaxBagStack;}
 	//往背包中添加item
 	bool AddItem(int32 Item_ID,int32 Item_Counter);
 protected:
 	UPROPERTY(EditAnywhere)
-	int32 MaxStack;//物品最大堆叠数量
+	int32 MaxBagStack;//背包容量
 	//存储已经存放item的格子信息
 	TMap<int32, FGridData> GridMap;
 	//查询空闲的格子
