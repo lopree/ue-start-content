@@ -1,7 +1,14 @@
 #include "BagUIController.h"
 
-void UBagUIController::BindPlayerAndUI(AInventoryCharacter* player, UInventoryUserWidget* inventory_user_widget)
+#include "ReProject/UMG/Tutorial_Inventory/InventoryCharacter.h"
+
+void UBagUIController::BindPlayerAndUI(AInventoryCharacter* player, UBagUserWidget* bag_user_widget)
 {
 	this->Character = player;
-	this->InventoryUserWidger= inventory_user_widget;
+	this->BagUserWidget= bag_user_widget;
+}
+
+TMap<int32, FGridData> UBagUIController::GetPlayerBagItemsData()
+{
+	return Character->GetBagActorComponent()->GetItemsData();
 }

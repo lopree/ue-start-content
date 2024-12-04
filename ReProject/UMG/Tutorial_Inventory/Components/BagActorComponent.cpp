@@ -92,7 +92,7 @@ bool UBagActorComponent::AddItem(int32 Item_ID, int32 Item_Counter)
 			}else
 			{
 				//新格子
-				FGridData GD(Item_ID,Item_Counter);
+				FGridData GD(Item_ID,grid_temp.Need_Add_Item_Counter);
 				GridMap.Add(grid_temp.Grid_Site,GD);
 			}
 		}

@@ -43,6 +43,8 @@ public:
 	int32 GetBagStack(){return MaxBagStack;}
 	//往背包中添加item
 	bool AddItem(int32 Item_ID,int32 Item_Counter);
+	//获取背包中的数据,此数据在character身上，所以要传给controller使用
+	TMap<int32, FGridData> GetItemsData(){return GridMap;};
 protected:
 	UPROPERTY(EditAnywhere)
 	int32 MaxBagStack;//背包容量
