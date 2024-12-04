@@ -7,9 +7,14 @@
 #include "Blueprint/UserWidget.h"
 #include "BagUserWidget.generated.h"
 
+class UInventoryUserWidget;
+
 UCLASS()
 class REPROJECT_API UBagUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+protected:
+	virtual void NativeOnInitialized() override;
+	UPROPERTY(meta = (BindWidget))
+	UInventoryUserWidget* PlayerInventory;
 };
