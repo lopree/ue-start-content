@@ -39,8 +39,8 @@ protected:
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	//获取物品堆叠数量
-	int32 GetItemStack(){return MaxBagStack;}
+	//获取背包容量
+	int32 GetBagStack(){return MaxBagStack;}
 	//往背包中添加item
 	bool AddItem(int32 Item_ID,int32 Item_Counter);
 protected:
