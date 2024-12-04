@@ -1,6 +1,9 @@
 #include "Tutorial_Inventory_GameModeBase.h"
 
+#include "InventoryCharacter.h"
 #include "Inventory_HUD.h"
+#include "Components/BagActorComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Manager/ItemManager.h"
 #include "Tool/InventoryBFL.h"
 
@@ -16,11 +19,16 @@ ATutorial_Inventory_GameModeBase::ATutorial_Inventory_GameModeBase()
 
 void ATutorial_Inventory_GameModeBase::AddItem(int32 id, int32 counter)
 {
-	if (FItemDataBase* data = UInventoryBFL::GetItemManager(this)->GetItemData(id))
+	// if (FItemDataBase* data = UInventoryBFL::GetItemManager(this)->GetItemData(id))
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("[rookstein]添加了%d个%s"), counter,*data->Item_Name.ToString());
+	// }else
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("[rookstein]no this item"));
+	// }
+
+	if (AInventoryCharacter* player = Cast<AInventoryCharacter>(UGameplayStatics::GetPlayerCharacter(this,0)))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[rookstein]添加了%d个%s"), counter,*data->Item_Name.ToString());
-	}else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[rookstein]no this item"));
+		player->GetBagActorComponent()->AddItem(id,counter);
 	}
 }

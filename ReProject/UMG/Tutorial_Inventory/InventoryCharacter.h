@@ -5,6 +5,7 @@
 #include "GameFramework/Character.h"
 #include "InventoryCharacter.generated.h"
 
+class UBagActorComponent;
 struct FInputActionValue;
 class UInputAction;
 class UInputMappingContext;
@@ -57,9 +58,11 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 public:
 	EPlayerJob GetJob(){return Job;}
-
+	UBagActorComponent* GetBagActorComponent(){return Bag_Component;}
 protected:
 	UPROPERTY(EditAnywhere)
 	EPlayerJob Job;
+	UPROPERTY(VisibleAnywhere)
+	UBagActorComponent* Bag_Component;
 
 };
