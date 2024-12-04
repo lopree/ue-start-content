@@ -2,6 +2,7 @@
 
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "Kismet/GameplayStatics.h"
 #include "Tool/InventoryBFL.h"
 
 void UItemSlotUserWidget::UpdateSlotInfo(FItemDataBase* item_data,int32 item_counter)
@@ -28,7 +29,9 @@ void UItemSlotUserWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const 
 
 FReply UItemSlotUserWidget::NativeOnMouseMove(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	UInventoryBFL::GetHUD(this)->UpdateItemInfoPosition(InMouseEvent.GetScreenSpacePosition());
+	FVector2d MousePos;
+	UGameplayStatics::GetPlayerController(this,0)->GetMousePosition(MousePos.X,MousePos.Y);
+	UInventoryBFL::GetHUD(this)->UpdateItemInfoPosition(MousePos);
 	return FReply::Unhandled();
 }
 
