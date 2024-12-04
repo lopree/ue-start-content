@@ -20,5 +20,11 @@ protected:
 	UImage* Item;
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* Item_Counter;
+	UPROPERTY(meta = (BindWidget))
+	UImage* Outline;
+	//鼠标悬停显示
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual FReply NativeOnMouseMove(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 	
 };
