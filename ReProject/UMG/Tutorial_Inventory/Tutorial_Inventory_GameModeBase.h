@@ -11,5 +11,9 @@ class REPROJECT_API ATutorial_Inventory_GameModeBase : public AGameModeBase
 	GENERATED_BODY()
 public:
 	ATutorial_Inventory_GameModeBase();
+
+protected:
+	UFUNCTION(Exec)
+	void AddItem(int32 id,int32 counter);
 	
 };
