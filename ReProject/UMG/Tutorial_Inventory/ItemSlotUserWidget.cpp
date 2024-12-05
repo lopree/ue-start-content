@@ -5,7 +5,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Tool/InventoryBFL.h"
 
-void UItemSlotUserWidget::UpdateSlotInfo(FItemDataBase* item_data,int32 item_counter)
+UItemSlotUserWidget::UItemSlotUserWidget(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
+{
+	ItemID = -1;
+}
+
+void UItemSlotUserWidget::UpdateSlotInfo(FItemDataBase* item_data,int32 item_counter) 
 {
 	//设置图片内容
 	FSlateBrush brush;
@@ -19,24 +24,35 @@ void UItemSlotUserWidget::UpdateSlotInfo(FItemDataBase* item_data,int32 item_cou
 	}
 	//设定边框颜色
 	Outline->SetBrushTintColor(UInventoryBFL::GetItemQuality(item_data->Item_Quality));
+	//
+	ItemID = item_data->Item_ID;
 }
 
 void UItemSlotUserWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
-	UInventoryBFL::GetHUD(this)->ShowItemInfo(nullptr,0);
+	if (ItemID!=-1)
+	{
+		Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
+		UInventoryBFL::GetHUD(this)->ShowItemInfo(nullptr,ItemID);
+	}
 }
 
 FReply UItemSlotUserWidget::NativeOnMouseMove(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	FVector2d MousePos;
-	UGameplayStatics::GetPlayerController(this,0)->GetMousePosition(MousePos.X,MousePos.Y);
-	UInventoryBFL::GetHUD(this)->UpdateItemInfoPosition(MousePos);
+	if (ItemID!=-1)
+	{
+		FVector2d MousePos;
+		UGameplayStatics::GetPlayerController(this,0)->GetMousePosition(MousePos.X,MousePos.Y);
+		UInventoryBFL::GetHUD(this)->UpdateItemInfoPosition(MousePos);
+	}
 	return FReply::Unhandled();
 }
 
 void UItemSlotUserWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 {
-	Super::NativeOnMouseLeave(InMouseEvent);
-	UInventoryBFL::GetHUD(this)->HideItemInfo();
+	if (ItemID!=-1)
+	{
+		Super::NativeOnMouseLeave(InMouseEvent);
+		UInventoryBFL::GetHUD(this)->HideItemInfo();
+	}
 }

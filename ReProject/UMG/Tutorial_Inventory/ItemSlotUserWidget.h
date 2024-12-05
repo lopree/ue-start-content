@@ -12,6 +12,7 @@ class REPROJECT_API UItemSlotUserWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	UItemSlotUserWidget(const FObjectInitializer& ObjectInitializer);
 	//更新格子中的信息
 	void UpdateSlotInfo(FItemDataBase* item_data,int32 item_counter);
 
@@ -26,5 +27,8 @@ protected:
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual FReply NativeOnMouseMove(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
+
+	//记录这个格子物品的id
+	int32 ItemID;
 	
 };

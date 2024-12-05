@@ -42,6 +42,7 @@ void AInventory_HUD::ShowItemInfo(FItemDataBase* item_data,int32 item_id)
 	}
 	if (!ItemTooltip->IsInViewport())
 	{
+		ItemTooltip->InitTooltip(item_data,item_id);
 		ItemTooltip->AddToViewport();
 		ItemTooltip->SetDesiredSizeInViewport(FVector2d(330,400));
 	}
