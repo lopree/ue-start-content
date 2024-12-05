@@ -5,10 +5,10 @@
 void UInventory_ItemManager::Install()
 {
 	// 加载装备数据表
-	LoadDataTable(Equips_DataTable, TEXT("/Game/Tutorial_Inventory01/Data/DT_Consum.DT_Consum"));
+	LoadDataTable(Equips_DataTable, TEXT("/Script/Engine.DataTable'/Game/Demo_Inventory/Data/DT_Equip.DT_Equip'"));
     
 	// 加载消耗品数据表
-	LoadDataTable(Consume_DataTable, TEXT("/Game/Tutorial_Inventory01/Data/DT_Consum.DT_Consum"));
+	LoadDataTable(Consume_DataTable, TEXT("/Script/Engine.DataTable'/Game/Demo_Inventory/Data/DT_Consume.DT_Consume'"));
 }
 
 void UInventory_ItemManager::LoadDataTable(UDataTable*& DataTable, const FString& Path)
