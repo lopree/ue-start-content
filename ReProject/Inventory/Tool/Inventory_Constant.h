@@ -14,19 +14,19 @@
 UENUM(BlueprintType)
 enum class EInventory_Quality_Type : uint8
 {
-	EQT_Normal UMETA(DisplayName = "Normal"),   // 普通物品
-	EQT_Rare UMETA(DisplayName = "Rare"),       // 稀有物品
-	EQT_Epic UMETA(DisplayName = "Epic"),       // 史诗物品
-	EQT_Legendary UMETA(DisplayName = "Legendary"), // 传说物品
-	EQT_Mythic UMETA(DisplayName = "Mythic")    // 神话物品
+	eqt_normal UMETA(DisplayName = "Normal"),   // 普通物品
+	eqt_rare UMETA(DisplayName = "Rare"),       // 稀有物品
+	eqt_epic UMETA(DisplayName = "Epic"),       // 史诗物品
+	eqt_legendary UMETA(DisplayName = "Legendary"), // 传说物品
+	eqt_mythic UMETA(DisplayName = "Mythic")    // 神话物品
 };
 /** 定义物体的类型 **/
 UENUM(BlueprintType)
 enum class EInventory_Item_Type : uint8
 {
-	EIT_Equips UMETA(DisplayName = "Equips"),
-	EIT_Consume   UMETA(DisplayName = "Consume"),
-	EIT_Misc UMETA(DisplayName = "Misc"),
+	eit_equips UMETA(DisplayName = "Equips"),
+	eit_consume   UMETA(DisplayName = "Consume"),
+	eit_misc UMETA(DisplayName = "Misc"),
 };
 
 //=====================================
@@ -37,22 +37,59 @@ USTRUCT()
 struct FInventory_ItemDataBase : public FTableRowBase
 {
 	GENERATED_BODY()
+	//id
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Item_ID;
+	int32 item_id;
+	//物品名
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FText Item_Name;
+	FText item_name;
+	//icon
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UTexture2D* Item_Sprite;
+	UTexture2D* item_sprite;
+	//mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* Item_Static_Mesh_Component;	
+	UStaticMesh* item_static_mesh_component;
+	//描述
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)	
-	FText Item_Description;
+	FText item_description;
+	//物品类型
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EInventory_Item_Type Item_Type;
+	EInventory_Item_Type item_type;
+	//稀有度
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EInventory_Quality_Type Item_Quality;
+	EInventory_Quality_Type item_quality;
+	//价格
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Item_Value;//价格
+	int32 item_value;
+	//最大堆叠数量
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Item_Max_Stack;//最大堆叠数量
+	int32 item_max_stack = 1;
+};
+///消耗品数据
+USTRUCT(BlueprintType)
+struct FInventory_ConsumableData : public FInventory_ItemDataBase
+{
+	GENERATED_BODY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float hp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float mp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float exp;
+};
+///装备数据
+USTRUCT(BlueprintType)
+struct FInventory_EquipData : public FInventory_ItemDataBase
+{
+	GENERATED_BODY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 attack;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 defense;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 hp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 mp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 critical;
 };
