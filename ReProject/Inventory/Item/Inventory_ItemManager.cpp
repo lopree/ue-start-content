@@ -40,7 +40,7 @@ void UInventory_ItemManager::Uninstall()
 	
 }
 
-FInventory_ItemDataBase* UInventory_ItemManager::GetItem_StaticMeshComponent(int32 ID)
+FInventory_ItemDataBase* UInventory_ItemManager::GetItemData(int32 ID)
 {
 	for (auto Item : Item_Data_Map)
 	{

@@ -1,5 +1,13 @@
 #include "Inventory_ItemActor.h"
 
+#include "Inventory_ItemManager.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
+#include "ReProject/Inventory/Tool/Inventory_BFL.h"
+#include "ReProject/Inventory/Tool/Inventory_Constant.h"
+#include "ReProject/Inventory/Tool/Inventory_GameInstance.h"
+#include "ReProject/Inventory/Tool/Inventory_ManagerBase.h"
+
 AInventory_ItemActor::AInventory_ItemActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -26,9 +34,6 @@ AInventory_ItemActor::AInventory_ItemActor()
 void AInventory_ItemActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
-	
 }
 
 void AInventory_ItemActor::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
@@ -43,8 +48,17 @@ void AInventory_ItemActor::PostEditChangeProperty(struct FPropertyChangedEvent& 
 		// 检查是哪个枚举发生了变化，并打印出对应的枚举值
 		if (PropertyName == TEXT("Item_ID"))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Item ID Changed: %d"), Item_ID);
-			//获得物品信息，然后更改模型
+			if (Item_ID < 0)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("[rookstein]<0"));
+				UStaticMesh* CubeMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Script/Engine.StaticMesh'/Game/LevelPrototyping/Meshes/SM_ChamferCube.SM_ChamferCube'"));
+				StaticMeshComponent->SetStaticMesh(CubeMesh);  // 设置方形网格
+			}
+			else
+			{
+				FInventory_ItemDataBase* item = UInventory_BFL::GetItemData(Item_ID);
+				StaticMeshComponent->SetStaticMesh(item->item_static_mesh_component);	
+			}
 		}
 		
 	}

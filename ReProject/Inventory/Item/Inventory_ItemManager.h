@@ -10,11 +10,12 @@ UCLASS()
 class REPROJECT_API UInventory_ItemManager : public UInventory_ManagerBase
 {
 	GENERATED_BODY()
+	friend class UInventory_BFL;
 public:
 	virtual void Install() override;
 	virtual void Uninstall() override;
 	//根据ID获得物品使用的static mesh component
-	FInventory_ItemDataBase* GetItem_StaticMeshComponent(int32 ID);
+	FInventory_ItemDataBase* GetItemData(int32 ID);
 	
 private:
 	UPROPERTY()
