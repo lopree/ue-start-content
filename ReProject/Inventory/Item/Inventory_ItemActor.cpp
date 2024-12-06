@@ -50,14 +50,20 @@ void AInventory_ItemActor::PostEditChangeProperty(struct FPropertyChangedEvent& 
 		{
 			if (Item_ID < 0)
 			{
-				UE_LOG(LogTemp, Warning, TEXT("[rookstein]<0"));
 				UStaticMesh* CubeMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Script/Engine.StaticMesh'/Game/LevelPrototyping/Meshes/SM_ChamferCube.SM_ChamferCube'"));
-				StaticMeshComponent->SetStaticMesh(CubeMesh);  // 设置方形网格
+				StaticMeshComponent->SetStaticMesh(CubeMesh); 
 			}
 			else
 			{
 				FInventory_ItemDataBase* item = UInventory_BFL::GetItemData(Item_ID);
-				StaticMeshComponent->SetStaticMesh(item->item_static_mesh_component);	
+				if (item)
+				{
+					StaticMeshComponent->SetStaticMesh(item->item_static_mesh_component);	
+				}else
+				{
+					UStaticMesh* CubeMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Script/Engine.StaticMesh'/Game/LevelPrototyping/Meshes/SM_ErrCube.SM_ErrCube'"));
+					StaticMeshComponent->SetStaticMesh(CubeMesh);  
+				}
 			}
 		}
 		

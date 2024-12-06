@@ -12,4 +12,5 @@ class REPROJECT_API UInventory_BFL : public UBlueprintFunctionLibrary
 public:
 	static UInventory_ItemManager* GetItemManager(UObject* WorldContext);
 	static FInventory_ItemDataBase* GetItemData(int32 item_id);
+
 };
