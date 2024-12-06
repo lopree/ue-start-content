@@ -5,8 +5,10 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/LODSyncComponent.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Item/Inventory_ItemActor.h"
 
 ACustomRPGCharacter::ACustomRPGCharacter()
 {
@@ -34,19 +36,24 @@ ACustomRPGCharacter::ACustomRPGCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); 
 	FollowCamera->bUsePawnControlRotation = false;
-	//添加meta human 骨骼
-	// USkeletalMeshComponent* root_skeletal_mesh_component = GetMesh();
-	// Feet = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Feet"));
-	// Legs = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Legs"));
-	// Torso = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Torso"));
-	// Face = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Face"));
-	// Feet->SetupAttachment(root_skeletal_mesh_component);
-	// Legs->SetupAttachment(root_skeletal_mesh_component);
-	// Torso->SetupAttachment(root_skeletal_mesh_component);
-	// Face->SetupAttachment(root_skeletal_mesh_component);
+	//碰撞区域
+	// 创建 Sphere Collision 组件
+	SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
+
+	// 设置 Sphere Collision 组件的大小
+	SphereCollision->InitSphereRadius(100.f);
+
+	// 将 Sphere Collision 组件设置为根组件
+	SphereCollision->SetupAttachment(RootComponent);
 	
 }
-
+void ACustomRPGCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	// 碰撞堆叠
+	SphereCollision->OnComponentBeginOverlap.AddDynamic(this,&ACustomRPGCharacter::OnOverlapBegin);
+	SphereCollision->OnComponentEndOverlap.AddDynamic(this,&ACustomRPGCharacter::OnOverlapEnd);
+}
 void ACustomRPGCharacter::NotifyControllerChanged()
 {
 	Super::NotifyControllerChanged();
@@ -74,8 +81,13 @@ void ACustomRPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACustomRPGCharacter::Look);
+
+		// pick
+		EnhancedInputComponent->BindAction(PickAction, ETriggerEvent::Completed, this, &ACustomRPGCharacter::Pick);
 	}
 }
+
+
 
 void ACustomRPGCharacter::Move(const FInputActionValue& Value)
 {
@@ -113,4 +125,41 @@ void ACustomRPGCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void ACustomRPGCharacter::Pick()
+{
+	if (InventoryArray.Num() > 0)
+	{
+		//接口函数实现
+		Cast<IInteractables>(InventoryArray[0])->InteractPure();
+		//AInventory_ItemActor* ItemToPickup = InventoryArray[0]; // 获取数组中的第一个物品
+
+		//IInteractables::Execute_Interact(InventoryArray[0], 1); // 调用接口方法，传递参数，如果Interact方法中有参数
+	}
+}
+
+void ACustomRPGCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                         UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		// 检查物体的标签
+		if (OtherActor->ActorHasTag("Interactable")) 
+		{
+			InventoryArray.Add(OtherActor);
+		}
+	}
+}
+
+void ACustomRPGCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		// 检查物体的标签
+		if (OtherActor->ActorHasTag("Interactable")) 
+		{
+			InventoryArray.Remove(OtherActor);
+		}
+	}
+}
 

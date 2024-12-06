@@ -1,12 +1,7 @@
 #include "Inventory_ItemActor.h"
-
-#include "Inventory_ItemManager.h"
-#include "GameFramework/Character.h"
-#include "Kismet/GameplayStatics.h"
 #include "ReProject/Inventory/Tool/Inventory_BFL.h"
 #include "ReProject/Inventory/Tool/Inventory_Constant.h"
-#include "ReProject/Inventory/Tool/Inventory_GameInstance.h"
-#include "ReProject/Inventory/Tool/Inventory_ManagerBase.h"
+
 
 AInventory_ItemActor::AInventory_ItemActor()
 {
@@ -29,6 +24,7 @@ AInventory_ItemActor::AInventory_ItemActor()
 
 	StaticMeshComponent->SetSimulatePhysics(true);
 	
+	
 }
 
 void AInventory_ItemActor::BeginPlay()
@@ -36,6 +32,9 @@ void AInventory_ItemActor::BeginPlay()
 	Super::BeginPlay();
 }
 
+//=====================================
+//******** 编辑器行为，当属性变换的时候 ********
+//=====================================
 void AInventory_ItemActor::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
 {
 	Super::PostEditChangeProperty(PropertyChangedEvent);
@@ -68,6 +67,19 @@ void AInventory_ItemActor::PostEditChangeProperty(struct FPropertyChangedEvent& 
 		}
 		
 	}
+}
+
+void AInventory_ItemActor::Interact_Implementation()
+{
+	IInteractables::Interact_Implementation();
+	UE_LOG(LogTemp, Warning, TEXT("[rookstein]轮到我来(来自Implementation)"));
+}
+
+void AInventory_ItemActor::InteractPure()
+{
+	//其他行为。。。比如，播放物体上的光效和音效
+	//摧毁
+	Destroy();
 }
 
 void AInventory_ItemActor::Tick(float DeltaTime)

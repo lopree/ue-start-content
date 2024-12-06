@@ -5,6 +5,8 @@
 #include "GameFramework/Character.h"
 #include "CustomRPGCharacter.generated.h"
 
+class AInventory_ItemActor;
+class USphereComponent;
 class ULODSyncComponent;
 class UInputAction;
 class UInputMappingContext;
@@ -22,20 +24,22 @@ public:
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 	ACustomRPGCharacter();
-
-
 protected:
 	
 	void Move(const FInputActionValue& Value);
 
 	void Look(const FInputActionValue& Value);
 
+	void Pick();
+
 	virtual void NotifyControllerChanged() override;
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	virtual void BeginPlay() override;
 private:
-	///组件
+	//=====================================
+	//******** 组件 ********
+	//=====================================
 	/** Spring Arm */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -44,16 +48,12 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
 
-	/** 骨骼（skeleton mesh） **/
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	// USkeletalMeshComponent* Feet;
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	// USkeletalMeshComponent* Legs;
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	// USkeletalMeshComponent* Torso;
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	// USkeletalMeshComponent* Face;
-	/** 输入映射 */
+	/** 碰撞 **/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Custom, meta = (AllowPrivateAccess = "true"))
+	USphereComponent* SphereCollision;
+	//=====================================
+	//******** 输入映射 ********
+	//=====================================
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
 	
@@ -65,5 +65,18 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* PickAction;
+	//=====================================
+	//******** 碰撞回调 ********
+	//=====================================
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+						UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+						const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	// 存储碰撞的物品
+	UPROPERTY()
+	TArray<AActor*> InventoryArray;
 };
