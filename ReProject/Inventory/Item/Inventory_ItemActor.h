@@ -23,9 +23,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent) override;
-	//
-	void Interact_Implementation() override;
-	void InteractPure() override;
+	
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -34,4 +32,7 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Custom, meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* StaticMeshComponent;
+	//
+	void Interact_Implementation() override;
+	void InteractPure() override;
 };
