@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "UI/Inventory_Bag_HUD.h"
 #include "CustomRPGCharacter.generated.h"
 
 class AInventory_ItemActor;
@@ -32,6 +33,8 @@ protected:
 
 	void Pick();
 
+	void ToggleBag();
+
 	virtual void NotifyControllerChanged() override;
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -56,17 +59,16 @@ private:
 	//=====================================
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* JumpAction;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* PickAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ToggleBagAction;
 	//=====================================
 	//******** 碰撞回调 ********
 	//=====================================
@@ -79,4 +81,9 @@ private:
 	// 存储碰撞的物品
 	UPROPERTY()
 	TArray<AActor*> InventoryArray;
+	//=====================================
+	//******** 玩家控制器等 ********
+	//=====================================
+	APlayerController* InventoryOwner;
+	AInventory_Bag_HUD* InventoryBag;
 };

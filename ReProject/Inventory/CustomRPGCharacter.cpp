@@ -84,6 +84,9 @@ void ACustomRPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 		// pick
 		EnhancedInputComponent->BindAction(PickAction, ETriggerEvent::Completed, this, &ACustomRPGCharacter::Pick);
+
+		// toggle bag
+		EnhancedInputComponent->BindAction(ToggleBagAction, ETriggerEvent::Completed, this, &ACustomRPGCharacter::ToggleBag);
 	}
 }
 
@@ -131,10 +134,18 @@ void ACustomRPGCharacter::Pick()
 	{
 		//接口函数实现
 		Cast<IInteractables>(InventoryArray[0])->InteractPure();
-		//AInventory_ItemActor* ItemToPickup = InventoryArray[0]; // 获取数组中的第一个物品
-
-		//IInteractables::Execute_Interact(InventoryArray[0], 1); // 调用接口方法，传递参数，如果Interact方法中有参数
 	}
+}
+
+void ACustomRPGCharacter::ToggleBag()
+{
+	if (!InventoryOwner)
+	{
+		InventoryOwner = Cast<APlayerController>(GetController());
+		InventoryBag = Cast<AInventory_Bag_HUD>(InventoryOwner->GetHUD());
+	}
+
+	InventoryBag->ToggleBag();
 }
 
 void ACustomRPGCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
